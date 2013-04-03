@@ -6,7 +6,7 @@ import org.junit.Test;
 public class ParseTest {
 	
 	@Test
-	public void parse1Marker() {
+	public void substituirMarcadorPorNegritoHTML() {
 		
 		String input = "**palavra**";
 		String expected = "<b>palavra</b>";
@@ -17,7 +17,7 @@ public class ParseTest {
 	}
 	
 	@Test
-	public void parse3Markers(){
+	public void subtituirMultiplosMarcadoresParaHTML(){
 		String input = "__um **exemplo //qualquer//**__";
 		String expected = "<u>um <b>exemplo <i>qualquer</i></b></u>";
 		

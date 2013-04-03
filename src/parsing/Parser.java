@@ -1,6 +1,29 @@
 package parsing;
 
+import java.util.regex.Pattern;
+
 public class Parser {
+
+	enum Regex {
+		IMAGE("\\[image src=\"([\\w\\s\\d:\\/]*)\"\\]", "<img src=\"%s\"/>");
+
+		private Pattern pattern;
+		private Pattern internal;
+		private String html;
+
+		private Regex(String regex, String html) {
+			this.pattern = Pattern.compile(regex);
+			this.html = html;
+		}
+
+		public String replace(Object... values) {
+			return String.format(html, values);
+		}
+
+		public Pattern pattern() {
+			return pattern;
+		}
+	}
 
 	enum Markers {
 		BOLD("**", "b"), ITALIC("//", "i"), UNDERLINE("__", "u");
