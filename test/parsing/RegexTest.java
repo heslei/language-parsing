@@ -10,6 +10,32 @@ import org.junit.Test;
 import parsing.Parser.Regex;
 
 public class RegexTest {
+	
+	@Test
+	public void encontrarAnchorNaString(){
+		String input = "http://www.google.com";
+		Pattern pattern = Regex.ANCHOR.pattern();
+		Matcher matcher = pattern.matcher(input);
+		boolean find = matcher.find();
+		Assert.assertTrue(find);
+		
+	}
+	
+	@Test
+	public void encontrarAnchorComLabelNaString(){
+		String input = "[http://www.google.com](Google)";
+		Pattern pattern = Regex.ANCHOR_LABEL.pattern();
+		Matcher matcher = pattern.matcher(input);
+		boolean find = matcher.find();
+		Assert.assertTrue(find);
+		
+	}
+	
+	
+	
+	
+	
+	
 
 	@Test
 	public void encontrarMarcadorDeImagemNoTexto() {
@@ -26,14 +52,14 @@ public class RegexTest {
 
 	@Test
 	public void substituirMarcadorPorHMTL() {
-		StringBuffer input = new StringBuffer("     [image src=\"caminho qualquer\"] **bold** [image src=\"caminho qualquer2\"] ");
+		String input = "     [image src=\"caminho qualquer\"] **bold** [image src=\"caminho qualquer2\"] ";
 		String result = null;
 
 		Pattern pattern = Regex.IMAGE.pattern();
 		Matcher matcher = pattern.matcher(input);
 
 		boolean find = matcher.find();
-		if (find == true) {
+		while (find == true) {
 
 			String[] args = new String[matcher.groupCount()];
 			
@@ -41,11 +67,13 @@ public class RegexTest {
 				args[i-1] = matcher.group(i);
 			}
 
-			result = Regex.IMAGE.replace(args);
+			result = Regex.IMAGE.replaceValues(args);
 			
-			//matcher.appendReplacement(input, result);
+			input = matcher.replaceFirst(result);
+			matcher = pattern.matcher(input);
+			find = matcher.find();
 		}
 
-		Assert.assertEquals("<img src=\"caminho qualquer\"/>", result);
+		Assert.assertEquals("     <img src=\"caminho qualquer\" /> **bold** <img src=\"caminho qualquer2\" /> ", input);
 	}
 }
