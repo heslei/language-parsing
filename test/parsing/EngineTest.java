@@ -95,4 +95,14 @@ public class EngineTest {
 
 		Assert.assertEquals(expected, result);
 	}
+	
+	@Test
+	public void substituirMarcadorTabelaPorTableHTML() {
+		String input = "| a | b | c |\n| 1 | 2 | 3 |\n";
+		String expected = "<table><tr><td>a</td><td>b</td><td>c</td></tr><tr><td>1</td><td>2</td><td>3</td></tr></table>";
+
+		String result = Engine.parse(input);
+
+		Assert.assertEquals(expected, result);
+	}
 }

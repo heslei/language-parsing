@@ -59,12 +59,6 @@ public class RegexTest {
 		Assert.assertFalse(find);
 		
 	}
-	
-	
-	
-	
-	
-	
 
 	@Test
 	public void encontrarMarcadorDeImagemNoTexto() {
@@ -79,5 +73,23 @@ public class RegexTest {
 		Assert.assertEquals("[image src=\"caminho qualquer\"]", matcher.group());
 	}
 
+	@Test
+	public void encontrarTabelaComUmaColunaDuasLinhasNaString(){
+		String input = "|a|b|\n|c|d|";
+		Pattern pattern = Engine.TABLE.pattern();
+		Matcher matcher = pattern.matcher(input);
+		
+		boolean find = matcher.find();
+		Assert.assertTrue(find);
+		Assert.assertEquals("a|b", matcher.group(1));
+		
+		find = matcher.find();
+		Assert.assertTrue(find);
+		Assert.assertEquals("c|d", matcher.group(1));
+		
+		find = matcher.find();
+		Assert.assertFalse(find);
+		
+	}
 	
 }
